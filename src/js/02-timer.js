@@ -13,7 +13,7 @@ const options = {
     minuteIncrement: 1,
     onClose(selectedDates) {
 
-    //   console.log(selectedDates[0]);
+      console.log(selectedDates[0]);
     },
 };
 
