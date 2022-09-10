@@ -11,7 +11,7 @@ const refs = {
 };
  
 
-const currentDate =  Date.now('jan 1 2021 00:00:00');
+const currentDate =  new Date();
 let timerId = null;
 
 refs.btnStart.setAttribute('disabled', true);
