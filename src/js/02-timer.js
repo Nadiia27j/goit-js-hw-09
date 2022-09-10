@@ -12,7 +12,7 @@ const refs = {
  
 
 const currentDate =  new Date();
-let timerId = null;
+let intervalId = null;
 
 refs.btnStart.setAttribute('disabled', true);
 
@@ -22,44 +22,60 @@ const options = {
     defaultDate: new Date(),
     minuteIncrement: 1,
     onClose(selectedDates) {
-      if(Date.parse.inputField.value < Date.parse.currentDate) {
+      if(date < currentDate) {
         window.alert("Please choose a date in the future"); 
-      }else{
+        refs.btnStart.setAttribute('disabled', true);
+      }
+
+      if(date < currentDate) {
         refs.btnStart.setAttribute('disabled', false);
       }
       console.log(selectedDates[0]);
     },
 };
 
-flatpickr(refs.inputField, {options});
+flatpickr(refs.inputField, options);
 
 
-refs.btnStart.addEventListener('click',onBtnClickStart);
+refs.btnStart.addEventListener('click',onStartTimer);
 
 
-function onBtnClickStart() {
+function onStartTimer() {
+  refs.btnStart.setAttribute('disabled', true);
+  const startTime = Date.now();
+
+  intervalId = setInterval(() => {
+   const currentTime = Date.now();
+   const deltaTime = currentTime - startTime;
+   const { days, hours, minutes, seconds } = convertMs(deltaTime);
+   console.log(`${days}:${hours}:${minutes}:${seconds}`);
+  }, 1000);
+
+  const SumDateValue = days + hours + minutes + seconds;
+
+  if(SumDateValue === 0) {
+    clearInterval(intervalId);
+  }
 };
 
 
-// function convertMs(ms) {
-//     const second = 1000;
-//     const minute = second * 60;
-//     const hour = minute * 60;
-//     const day = hour * 24;
+function convertMs(ms) {
+    const second = 1000;
+    const minute = second * 60;
+    const hour = minute * 60;
+    const day = hour * 24;
   
-//     const days = addLeadingZero(Math.floor(ms / day));
-//     const hours = addLeadingZero(Math.floor((ms % day) / hour));
-//     const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
-//     const seconds = addLeadingZero(Math.floor((((ms % day) % hour) % minute) / second));
+    const days = addLeadingZero(Math.floor(ms / day));
+    const hours = addLeadingZero(Math.floor((ms % day) / hour));
+    const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
+    const seconds = addLeadingZero(Math.floor((((ms % day) % hour) % minute) / second));
   
-//     return { days, hours, minutes, seconds };
-// }
+    return { days, hours, minutes, seconds };
+}
 
-// function addLeadingZero(value) {
-//     return String(value).padStart(2, '0');
-// }
-
-
+function addLeadingZero(value) {
+    return String(value).padStart(2, '0');
+}
 
 
 
@@ -71,26 +87,5 @@ function onBtnClickStart() {
 
 
 
-// const timer = new Timer();
 
 
-
-// class Timer {
-//     constructor() {
-//         this.isActive = false;
-//     }
-
-//     start() {
-//         const startTime = Date.now();
-
-//         setInterval(() => {
-//             const currentTime = Date.now();
-//             const deltaTime = currentTime - startTime;
-//             const { days, hours, minutes, seconds } = convertMs(deltaTime);
-//             console.log(`${days}:${hours}:${minutes}:${seconds}`);
-//         }, 1000);
-//     }
-
-// };
-
-// timer.start();
