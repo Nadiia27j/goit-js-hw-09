@@ -10,7 +10,7 @@ const refs = {
     seconds: document.querySelector('[data-seconds]'),
 };
  
-
+let selectedTime = null;
 const currentDate =  new Date();
 let intervalId = null;
 
@@ -22,13 +22,14 @@ const options = {
     defaultDate: new Date(),
     minuteIncrement: 1,
     onClose(selectedDates) {
-      if(date < currentDate) {
+      if(selectedDates[0] < currentDate) {
         window.alert("Please choose a date in the future"); 
         refs.btnStart.setAttribute('disabled', true);
       }
 
-      if(date < currentDate) {
-        refs.btnStart.setAttribute('disabled', false);
+      if(selectedDates[0] > currentDate) {
+        selectedTime = selectedDates[0];
+        refs.btnStart.disabled = false;
       }
       console.log(selectedDates[0]);
     },
@@ -42,20 +43,23 @@ refs.btnStart.addEventListener('click',onStartTimer);
 
 function onStartTimer() {
   refs.btnStart.setAttribute('disabled', true);
-  const startTime = Date.now();
+  
 
   intervalId = setInterval(() => {
-   const currentTime = Date.now();
-   const deltaTime = currentTime - startTime;
+   const deltaTime =  selectedTime - Date.now();
+   if(deltaTime <= 1000) {
+    clearInterval(intervalId);
+   }
    const { days, hours, minutes, seconds } = convertMs(deltaTime);
    console.log(`${days}:${hours}:${minutes}:${seconds}`);
+
+    refs.days.textContent = addLeadingZero(days);
+    refs.hours.textContent = addLeadingZero(hours);
+    refs.minutes.textContent = addLeadingZero(minutes);
+    refs.seconds.textContent = addLeadingZero(seconds);
+    
   }, 1000);
 
-  const SumDateValue = days + hours + minutes + seconds;
-
-  if(SumDateValue === 0) {
-    clearInterval(intervalId);
-  }
 };
 
 
