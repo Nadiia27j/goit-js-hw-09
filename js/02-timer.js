@@ -17,7 +17,7 @@ let timerId = null;
 refs.btnStart.setAttribute('disabled', true);
 
 const options = {
-    enableTime: true,
+  enableTime: true,
     time_24hr: true,
     defaultDate: new Date(),
     minuteIncrement: 1,

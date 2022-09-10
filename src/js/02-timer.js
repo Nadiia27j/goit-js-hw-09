@@ -1,26 +1,40 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
+const refs = {
+    btnStart: document.querySelector('button[data-start]'),
+    inputField: document.querySelector('#datetime-picker'),
+    days: document.querySelector('[data-days]'),
+    hours: document.querySelector('[data-hours]'),
+    minutes: document.querySelector('[data-minutes]'),
+    seconds: document.querySelector('[data-seconds]'),
+};
+ 
 
-const btnStart = document.querySelector('[data-start]');
-const inputField = document.querySelector('#datetime-picker');
+const currentDate =  Date.now('jan 1 2021 00:00:00');
+let timerId = null;
 
+refs.btnStart.setAttribute('disabled', true);
 
 const options = {
-    enableTime: true,
+  enableTime: true,
     time_24hr: true,
     defaultDate: new Date(),
     minuteIncrement: 1,
     onClose(selectedDates) {
-
+      if(Date.parse.inputField.value < Date.parse.currentDate) {
+        window.alert("Please choose a date in the future"); 
+      }else{
+        refs.btnStart.setAttribute('disabled', false);
+      }
       console.log(selectedDates[0]);
     },
 };
 
-flatpickr(inputField, {options});
+flatpickr(refs.inputField, {options});
 
 
-btnStart.addEventListener('click',onBtnClickStart);
+refs.btnStart.addEventListener('click',onBtnClickStart);
 
 
 function onBtnClickStart() {
