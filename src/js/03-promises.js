@@ -13,10 +13,7 @@ function onFormSubmit(e) {
   e.preventDefault();
 
   let { delay, step, amount } = onGettingDate();
-  console.log(delay);
-  console.log(step);
-  console.log(amount);
-
+ 
   for (let position = 1; position <= amount; position += 1) {
     createPromise(position, delay)
     .then(({ position, delay }) => {
@@ -28,7 +25,6 @@ function onFormSubmit(e) {
     delay += step;
   }
 }
-
 
 
 function createPromise(position, delay) {
