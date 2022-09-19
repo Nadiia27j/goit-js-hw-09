@@ -17,11 +17,32 @@ img {
   max-width: 100%;
 }
 
+.picker {
+  border-radius: 50px;
+  padding: 10px;
+}
+
+.start {
+  border-radius: 50px;
+  background-color: rgb(240, 240, 0);
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-color: blue;
+}
 
 .timer {
+  margin-top: 30px;
   display: flex;
 }
 
 .field:not(:last-child) {
   margin-right: 20px;
+}
+
+.field {
+  padding: 10px;
+ background-color: aqua;
+ border: 1px solid yellow;
+ border-radius: 50px;
 }
